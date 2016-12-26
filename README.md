@@ -1,6 +1,6 @@
-# Common
+# Common App for Umbrella
 
-**TODO: Add description**
+Common functionality I use across my umbrella projects.
 
 ## Installation
 
