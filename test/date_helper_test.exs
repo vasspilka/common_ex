@@ -1,7 +1,7 @@
-defmodule PT.DateHelperTest do
+defmodule Common.DateHelperTest do
   use ExUnit.Case
 
-  alias PT.DateHelper
+  alias Common.DateHelper
 
   test "date_to_text: successfully converted" do
     assert DateHelper.date_to_text(~D(2000-01-02)) == "02/01/2000"
