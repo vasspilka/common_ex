@@ -16,4 +16,28 @@ defmodule Common do
   end
   def module_to_key(module),
     do: {:error, %{message: IO.inspect(module) <> " is not module name"}}
+
+  @doc """
+  Deconstructs tuples to return their output, will raise on error
+  and on unknown tuples.
+
+  ## Examples
+
+      iex> Common.deconstruct({:ok, "Output"})
+      "Output"
+
+      iex> Common.deconstruct({:safe, "Safe"})
+      "Safe"
+
+      iex> Common.deconstruct({:error, %{message: "Error"}})
+      ** (RuntimeError) Error
+
+      iex> Common.deconstruct({:unknown, nil})
+      ** (RuntimeError) Can't handle :unknown.
+  """
+
+  def deconstruct({:ok, output}), do: output
+  def deconstruct({:safe, output}), do: output
+  def deconstruct({:error, error}), do: raise error[:message]
+  def deconstruct({type, _}) when is_atom(type), do: raise "Can't handle :#{type}."
 end
