@@ -40,4 +40,30 @@ defmodule Common do
   def deconstruct({:safe, output}), do: output
   def deconstruct({:error, error}), do: raise error[:message]
   def deconstruct({type, _}) when is_atom(type), do: raise "Can't handle :#{type}."
+
+  @doc """
+  Converts nil to any value, defaults to 0.
+  Can iterate over lists.
+
+  ## Examples
+
+     iex> Common.escape_nil(nil)
+     0
+
+     iex> Common.escape_nil(nil, "")
+     ""
+
+     iex> Common.escape_nil(123)
+     123
+
+     iex> Common.escape_nil([1.23, 456, nil])
+     [1.23, 456, 0]
+  """
+  def escape_nil(n, x \\ 0)
+
+  def escape_nil(nil, x), do: x
+  def escape_nil(xn, x) when is_list(xn), do: Enum.map(xn, &escape_nil(&1, x))
+  def escape_nil(n, _), do: n
+
+
 end
