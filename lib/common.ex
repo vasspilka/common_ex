@@ -43,7 +43,8 @@ defmodule Common do
 
   @doc """
   Converts nil to any value, defaults to 0.
-  Can iterate over lists.
+  Can iterate over lists, and maps, and keyword lists (also handles tuples).
+  It will change only values of the enumerable/tuple types.
 
   ## Examples
 
@@ -58,12 +59,24 @@ defmodule Common do
 
      iex> Common.escape_nil([1.23, 456, nil])
      [1.23, 456, 0]
+
+     iex> Common.escape_nil([a: "a", b: "b", c: nil], "c")
+     [a: "a", b: "b", c: "c"]
+
+     ## Warning: it will reorder the map.
+     iex> Common.escape_nil(%{c: nil, a: "a", b: "b"}, "c")
+     %{a: "a", b: "b", c: "c"}
   """
   def escape_nil(n, x \\ 0)
 
   def escape_nil(nil, x), do: x
-  def escape_nil(xn, x) when is_list(xn), do: Enum.map(xn, &escape_nil(&1, x))
+  def escape_nil({key, nil}, x), do: {key, x}
+
+  def escape_nil(xn, x) when is_list(xn),
+    do: Enum.map(xn, &escape_nil(&1, x))
+  def escape_nil(xn, x) when is_map(xn),
+    do: Enum.map(xn, &escape_nil(&1, x)) |> Enum.into(%{})
+
+  def escape_nil({key, val}, _), do: {key, val}
   def escape_nil(n, _), do: n
-
-
 end
