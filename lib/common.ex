@@ -79,4 +79,20 @@ defmodule Common do
 
   def escape_nil({key, val}, _), do: {key, val}
   def escape_nil(n, _), do: n
+
+  @doc """
+  Drops all mime types from a string
+
+  ## Examples
+
+  iex> Common.drop_mimes("file_name.pdf")
+  "file_name"
+
+  iex> Common.drop_mimes("file.with.three.mimes")
+  "file"
+  """
+  @spec drop_mimes(String.t) :: String.t
+  def drop_mimes(str) when is_binary(str) do
+    str |> String.split(".") |> Enum.at(0)
+  end
 end
