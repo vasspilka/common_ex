@@ -18,7 +18,8 @@ defmodule Common.Ecto do
   end
   def strip_meta({key, %{__struct__: struct} = val})
     when struct in @exceptions, do: {key, val}
-  def strip_meta({key, val}) when is_map(val), do: {key, strip_meta(val)}
+  def strip_meta({key, val}) 
+    when is_map(val) or is_list(val), do: {key, strip_meta(val)}
   def strip_meta(data), do: data
 end
  
