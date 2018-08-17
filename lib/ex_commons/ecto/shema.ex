@@ -1,4 +1,4 @@
-defmodule ExCommons.Ecto do
+defmodule ExCommons.Ecto.Schema do
   @moduledoc """
   Helpers for Ecto
   """

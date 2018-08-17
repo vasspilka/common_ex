@@ -1,12 +1,12 @@
 # ExCommons App for Umbrella
 
-ExCommons functionality I use across my umbrella projects.
+ExCommons functionality I occasionally find usefull.
 
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
 
-  1. Add `common` to your list of dependencies in `mix.exs`:
+  1. Add `ex_commons` to your list of dependencies in `mix.exs`:
 
     ```elixir
     def deps do
