@@ -11,9 +11,9 @@ defmodule ExCommons do
       {:error, %{message: "SomeString is not module name"}}
   """
   def module_to_key(module) when is_atom(module) do
-    module
-    |> Module.split() |> List.last() |> Macro.underscore() |> String.to_atom()
+    module |> Module.split() |> List.last() |> Macro.underscore() |> String.to_atom()
   end
+
   def module_to_key(module),
     do: {:error, %{message: module <> " is not module name"}}
 
@@ -38,8 +38,8 @@ defmodule ExCommons do
 
   def deconstruct({:ok, output}), do: output
   def deconstruct({:safe, output}), do: output
-  def deconstruct({:error, error}), do: raise error[:message]
-  def deconstruct({type, _}) when is_atom(type), do: raise "Can't handle :#{type}."
+  def deconstruct({:error, error}), do: raise(error[:message])
+  def deconstruct({type, _}) when is_atom(type), do: raise("Can't handle :#{type}.")
 
   @doc """
   Converts nil to any value, defaults to 0.
@@ -74,6 +74,7 @@ defmodule ExCommons do
 
   def escape_nil(xn, x) when is_list(xn),
     do: Enum.map(xn, &escape_nil(&1, x))
+
   def escape_nil(xn, x) when is_map(xn),
     do: Enum.map(xn, &escape_nil(&1, x)) |> Enum.into(%{})
 
@@ -91,7 +92,7 @@ defmodule ExCommons do
   iex> ExCommons.drop_mimes("file.with.three.mimes")
   "file"
   """
-  @spec drop_mimes(String.t) :: String.t
+  @spec drop_mimes(String.t()) :: String.t()
   def drop_mimes(str) when is_binary(str) do
     str |> String.split(".") |> Enum.at(0)
   end

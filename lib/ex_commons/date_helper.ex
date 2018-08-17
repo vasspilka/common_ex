@@ -1,5 +1,4 @@
 defmodule ExCommons.DateHelper do
-
   @doc """
   Converts an Elixir/Ecto date to common EU string format (dd/mm/yyyy).
   Uses string interpolation in order to support more date types.
@@ -19,6 +18,6 @@ defmodule ExCommons.DateHelper do
     |> String.split("/")
     |> Enum.reverse()
     |> Enum.join("-")
-    |> Date.from_iso8601!
+    |> Date.from_iso8601!()
   end
 end
