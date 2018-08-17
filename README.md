@@ -1,6 +1,6 @@
-# Common App for Umbrella
+# ExCommons App for Umbrella
 
-Common functionality I use across my umbrella projects.
+ExCommons functionality I use across my umbrella projects.
 
 ## Installation
 
@@ -10,7 +10,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
     ```elixir
     def deps do
-      [{:common, "~> 0.1.0"}]
+      [{:ex_commons, "~> 0.1.0"}]
     end
     ```
 
@@ -18,7 +18,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
     ```elixir
     def application do
-      [applications: [:common]]
+      [applications: [:ex_commons]]
     end
     ```
 

@@ -1,13 +1,13 @@
-defmodule Common do
+defmodule ExCommons do
   @doc """
   Transforms module name to key, useful for polymorphism in ecto associations.
 
   ## Examples
 
-      iex> Common.module_to_key(Some.ModuleName)
+      iex> ExCommons.module_to_key(Some.ModuleName)
       :module_name
 
-      iex> Common.module_to_key("SomeString")
+      iex> ExCommons.module_to_key("SomeString")
       {:error, %{message: "SomeString is not module name"}}
   """
   def module_to_key(module) when is_atom(module) do
@@ -15,7 +15,7 @@ defmodule Common do
     |> Module.split() |> List.last() |> Macro.underscore() |> String.to_atom()
   end
   def module_to_key(module),
-    do: {:error, %{message: IO.inspect(module) <> " is not module name"}}
+    do: {:error, %{message: module <> " is not module name"}}
 
   @doc """
   Deconstructs tuples to return their output, will raise on error
@@ -23,16 +23,16 @@ defmodule Common do
 
   ## Examples
 
-      iex> Common.deconstruct({:ok, "Output"})
+      iex> ExCommons.deconstruct({:ok, "Output"})
       "Output"
 
-      iex> Common.deconstruct({:safe, "Safe"})
+      iex> ExCommons.deconstruct({:safe, "Safe"})
       "Safe"
 
-      iex> Common.deconstruct({:error, %{message: "Error"}})
+      iex> ExCommons.deconstruct({:error, %{message: "Error"}})
       ** (RuntimeError) Error
 
-      iex> Common.deconstruct({:unknown, nil})
+      iex> ExCommons.deconstruct({:unknown, nil})
       ** (RuntimeError) Can't handle :unknown.
   """
 
@@ -48,23 +48,23 @@ defmodule Common do
 
   ## Examples
 
-     iex> Common.escape_nil(nil)
+     iex> ExCommons.escape_nil(nil)
      0
 
-     iex> Common.escape_nil(nil, "")
+     iex> ExCommons.escape_nil(nil, "")
      ""
 
-     iex> Common.escape_nil(123)
+     iex> ExCommons.escape_nil(123)
      123
 
-     iex> Common.escape_nil([1.23, 456, nil])
+     iex> ExCommons.escape_nil([1.23, 456, nil])
      [1.23, 456, 0]
 
-     iex> Common.escape_nil([a: "a", b: "b", c: nil], "c")
+     iex> ExCommons.escape_nil([a: "a", b: "b", c: nil], "c")
      [a: "a", b: "b", c: "c"]
 
      ## Warning: it will reorder the map.
-     iex> Common.escape_nil(%{c: nil, a: "a", b: "b"}, "c")
+     iex> ExCommons.escape_nil(%{c: nil, a: "a", b: "b"}, "c")
      %{a: "a", b: "b", c: "c"}
   """
   def escape_nil(n, x \\ 0)
@@ -85,10 +85,10 @@ defmodule Common do
 
   ## Examples
 
-  iex> Common.drop_mimes("file_name.pdf")
+  iex> ExCommons.drop_mimes("file_name.pdf")
   "file_name"
 
-  iex> Common.drop_mimes("file.with.three.mimes")
+  iex> ExCommons.drop_mimes("file.with.three.mimes")
   "file"
   """
   @spec drop_mimes(String.t) :: String.t

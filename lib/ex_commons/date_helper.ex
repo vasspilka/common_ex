@@ -1,4 +1,4 @@
-defmodule Common.DateHelper do
+defmodule ExCommons.DateHelper do
 
   @doc """
   Converts an Elixir/Ecto date to common EU string format (dd/mm/yyyy).
