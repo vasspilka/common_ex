@@ -55,4 +55,31 @@ defmodule ExCommons.Map do
       {k, v} -> {String.to_atom(to_string(k)), v}
     end)
   end
+
+  @doc """
+  Takes all keys from first maps and mirrors them with corresponding values in second map.
+
+  ## Examples
+
+  iex> ExCommons.Map.mirror(%{}, %{nested: %{value: false}})
+  %{}
+
+  iex> ExCommons.Map.mirror(%{nested: %{value: true}}, %{nested: %{value: false}})
+  %{nested: %{value: false}}
+
+  iex> ExCommons.Map.mirror(%{nested: %{value: true}}, %{nested: %{value: false, other: nil}})
+  %{nested: %{value: false}}
+
+  iex> ExCommons.Map.mirror(%{nested: %{value: true}}, %{other: "test", nested: %{value: false, other: nil}})
+  %{nested: %{value: false}}
+  """
+  def mirror(base, mirrored) when is_map(base) and is_map(mirrored) do
+    for {k, v} <- base, into: %{} do
+      {k, mirror(v, Map.get(mirrored, k))}
+    end
+  end
+
+  def mirror(_v, value) do
+    value
+  end
 end
