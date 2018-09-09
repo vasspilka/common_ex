@@ -17,6 +17,10 @@ defmodule ExCommons.Ecto.Changeset do
   iex> changeset = %{changes: %{root: %{changes: %{one: %{changes: %{two: true}, valid?: true}}, valid?: true}}, valid?: true}
   iex> ExCommons.Ecto.Changeset.get_changes(changeset)
   %{root: %{one: %{two: true}}}
+
+  iex> changeset = %{changes: %{root: [%{changes: %{one: %{changes: %{two: true}, valid?: true}}, valid?: true}]}, valid?: true}
+  iex> ExCommons.Ecto.Changeset.get_changes(changeset)
+  %{root: [%{one: %{two: true}}]}
   """
   def get_changes(%{valid?: false}) do
     {:error, :invalid_changeset}
@@ -28,6 +32,10 @@ defmodule ExCommons.Ecto.Changeset do
       [{key, get_changes(change)} | acc]
     end)
     |> Enum.into(%{})
+  end
+
+  def get_changes(changeset_list) when is_list(changeset_list) do
+    Enum.map(changeset_list, &get_changes/1)
   end
 
   def get_changes(change) do
@@ -48,6 +56,10 @@ defmodule ExCommons.Ecto.Changeset do
   iex> changeset = %{changes: %{other: %{changes: %{embed_change: true}, errors: [must: {"can't be blank", [validation: :required]}], valid?: false}}, valid?: false, errors: []}
   iex> ExCommons.Ecto.Changeset.get_errors(changeset)
   %{other: %{must: {"can't be blank", [validation: :required]}}}
+
+  iex> changeset = %{changes: %{other: [%{changes: %{embed_change: true}, errors: [must: {"can't be blank", [validation: :required]}], valid?: false}]}, valid?: false, errors: []}
+  iex> ExCommons.Ecto.Changeset.get_errors(changeset)
+  %{other: [%{must: {"can't be blank", [validation: :required]}}]}
   """
   def get_errors(%{valid?: true}) do
     %{}
@@ -64,6 +76,10 @@ defmodule ExCommons.Ecto.Changeset do
       end
     end)
     |> Enum.into(%{})
+  end
+
+  def get_errors(changeset_list) when is_list(changeset_list) do
+    Enum.map(changeset_list, &get_errors/1)
   end
 
   def get_errors(_) do
