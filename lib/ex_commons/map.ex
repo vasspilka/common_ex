@@ -59,6 +59,8 @@ defmodule ExCommons.Map do
   @doc """
   Takes all keys from first maps and mirrors them with corresponding values in second map.
 
+  Warning: Strips the `__struct__` key.
+
   ## Examples
 
   iex> ExCommons.Map.mirror(%{}, %{nested: %{value: false}})
@@ -74,7 +76,7 @@ defmodule ExCommons.Map do
   %{nested: %{value: false}}
   """
   def mirror(base, mirrored) when is_map(base) and is_map(mirrored) do
-    for {k, v} <- base, into: %{} do
+    for {k, v} <- strip_keys(base, [:__struct__]), into: %{} do
       {k, mirror(v, Map.get(mirrored, k))}
     end
   end
