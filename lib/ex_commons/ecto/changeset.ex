@@ -43,7 +43,7 @@ defmodule ExCommons.Ecto.Changeset do
   end
 
   @doc """
-  Gets changes errors as a map.
+  Gets changeset errors as a map.
   !! For educational purposes, use Ecto.Changeset.traverse_errors/2 instead. You should achieve the result with the following.
   `Ecto.Changeset.traverse_errors(changeset, fn {msg, _opts} -> msg end)`
 
