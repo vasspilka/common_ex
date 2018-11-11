@@ -44,6 +44,9 @@ defmodule ExCommons.Ecto.Changeset do
 
   @doc """
   Gets changes errors as a map.
+  !! For educational purposes, use Ecto.Changeset.traverse_errors/2 instead. You should achieve the result with the following.
+  `Ecto.Changeset.traverse_errors(changeset, fn {msg, _opts} -> msg end)`
+
   ## Examples
 
   iex> ExCommons.Ecto.Changeset.get_errors(%{changes: %{some: :change}, valid?: true})
